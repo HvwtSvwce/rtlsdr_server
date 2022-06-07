@@ -10,6 +10,69 @@ lol.stdout.on("data", (data) => {
 
 function hexToBin(hex) {
     
+
+    var adsb_signal_split = hex.toString().split("");
+        //console.log(adsb_signal_split)
+        
+        var adsb_signal_binary = ""
+        var byteCount = 0
+        for (var i = 0; i < adsb_signal_split.length; i++) {
+        //    console.log(adsb_signal_split[i])
+            switch (adsb_signal_split[i]){
+                case "0":
+                    adsb_signal_binary += hexToDecTable[0];
+                    break;
+                case "1":
+                    adsb_signal_binary += hexToDecTable[1];
+                    break;
+                case "2":
+                    adsb_signal_binary += hexToDecTable[2];
+                    break;
+                case "3":
+                    adsb_signal_binary += hexToDecTable[3];
+                    break;
+                case "4":
+                    adsb_signal_binary += hexToDecTable[4];
+                    break;
+                case "5":
+                    adsb_signal_binary += hexToDecTable[5];
+                    break;
+                case "6":
+                    adsb_signal_binary += hexToDecTable[6];
+                    break;
+                case "7":
+                    adsb_signal_binary += hexToDecTable[7];
+                    break;
+                case "8":
+                    adsb_signal_binary += hexToDecTable[8];
+                    break;
+                case "9":
+                    adsb_signal_binary += hexToDecTable[9];
+                    break;
+                case "a":
+                    adsb_signal_binary += hexToDecTable[10];
+                    break;
+                case "b":
+                    adsb_signal_binary += hexToDecTable[11];
+                    break;
+                case "c":
+                    adsb_signal_binary += hexToDecTable[12];
+                    break;
+                case "d":
+                    adsb_signal_binary += hexToDecTable[13];
+                    break;
+                case "e":
+                    adsb_signal_binary += hexToDecTable[14];
+                    break;
+                case "f":
+                    adsb_signal_binary += hexToDecTable[15];
+                    break;
+            }
+        adsb_signal_binary += " "
+        byteCount += 2
+    }
+    console.log(byteCount)
+    return adsb_signal_binary;
 }
 
 var hexToDecTable = [
@@ -32,58 +95,22 @@ var hexToDecTable = [
 ]
 
 function parseInput(data){
-    var butts = data.toString().replace("*", '').replace(";", '').trim()
+    var raw_input = data.toString().replace("*", '').replace(";", '').trim()
     
-    //console.log(butts)
+    //console.lor raw_input)
 
-    if (butts.toString().includes("*") || butts.toString().includes(";") || butts.toString().length > 28 || butts.toString().length < 28) {
+    if (raw_input.toString().includes("*") || raw_input.toString().includes(";") || raw_input.toString().length > 28 || raw_input.toString().length < 28) {
         console.log("bad packet")
     } else {
-        var adsb_signal_split = butts.toString().split("");
-        //console.log(adsb_signal_split)
-        
-        var adsb_signal_binary = ""
-        for (var i = 0; i < adsb_signal_split.length; i ++) {
-            switch (adsb_signal_split[i]){
-                case 0:
-                    adsb_signal_binary += hexToDecTable[0];
-                case 1:
-                    adsb_signal_binary += hexToDecTable[1];
-                case 2:
-                    adsb_signal_binary += hexToDecTable[2];
-                case 3:
-                    adsb_signal_binary += hexToDecTable[3];
-                case 4:
-                    adsb_signal_binary += hexToDecTable[4];
-                case 5:
-                    adsb_signal_binary += hexToDecTable[5];
-                case 6:
-                    adsb_signal_binary += hexToDecTable[6];                    case 0:
-                case 7:
-                    adsb_signal_binary += hexToDecTable[7];
-                case 8:
-                    adsb_signal_binary += hexToDecTable[8];
-                case 9:
-                    adsb_signal_binary += hexToDecTable[9];
-                case "a":
-                    adsb_signal_binary += hexToDecTable[10];
-                case "b":
-                    adsb_signal_binary += hexToDecTable[11];
-                case "c":
-                    adsb_signal_binary += hexToDecTable[12];
-                case "d":
-                    adsb_signal_binary += hexToDecTable[13];
-                case "e":
-                    adsb_signal_binary += hexToDecTable[14];
-                case "f":
-                    adsb_signal_binary += hexToDecTable[15];
-            }
-            
-        }
-        console.log(adsb_signal_binary)
-        //console.log(butts.toString().split()
+        console.log(raw_input)
+        console.log(hexToBin(raw_input))
     }
+        
+
+
+
     // console.log(data.toString().slice(1, data.toString().length - 3))
-    //butts = data.toString().replace();
+    raw_input = data.toString().replace();
     //console.log(data)
 }
+
