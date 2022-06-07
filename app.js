@@ -68,10 +68,10 @@ function hexToBin(hex) {
                     adsb_signal_binary += hexToDecTable[15];
                     break;
             }
-        adsb_signal_binary += " "
+        adsb_signal_binary += ""
         byteCount += 2
     }
-    console.log(byteCount)
+    //console.log(byteCount)
     return adsb_signal_binary;
 }
 
@@ -99,14 +99,51 @@ function parseInput(data){
     
     //console.lor raw_input)
 
+    var binary_adsb = ""
     if (raw_input.toString().includes("*") || raw_input.toString().includes(";") || raw_input.toString().length > 28 || raw_input.toString().length < 28) {
         console.log("bad packet")
     } else {
+        //console.log(raw_input)
+        //console.log(hexToBin(raw_input))
         console.log(raw_input)
-        console.log(hexToBin(raw_input))
+        binary_adsb = hexToBin(raw_input).split("")
+        message = ""
+
+        for (var i = 0; i < binary_adsb.length; i++) {
+            
+            if (i == 0) {
+                message += "\x1b[32m Downlink Format: \x1b[33m"
+                message += binary_adsb[i]
+            } else if (i == 4) {
+                message += binary_adsb[i]
+                message += "\x1b[32m \n Transponder Capability: \x1b[33m"
+                
+            } else if (i == 7) {
+                message += binary_adsb[i]
+                message += "\x1b[32m \n ICAO Aircraft Address: \x1b[33m"
+                
+            } else if (i == 31) {
+                message += binary_adsb[i]
+                message += "\x1b[32m \n Message Type Code: \x1b[33m"
+            } else if (i == 36) {
+                message += binary_adsb[i]
+                message += "\x1b[32m \n Message: \x1b[33m"
+            } else if (i == 87) {
+                message += binary_adsb[i]
+                message += "\x1b[32m \n Parity/Interrogator ID: \x1b[33m"
+            } else if (i == 111) {
+                message += binary_adsb[i]
+                message += "\x1b[31m \n --- END MESSAGE ---"
+            } else {
+                message += binary_adsb[i]
+            }
+            
+        }
+        message += "\x1b[0m"
+        console.log(message)
     }
         
-
+    
 
 
     // console.log(data.toString().slice(1, data.toString().length - 3))
